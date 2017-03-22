@@ -12,17 +12,26 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_weight="1"
+        android:textColor="#ff010e"
+        android:textSize="30dp"
+        android:text="Relative Layout" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_weight="1"
+        android:textColor="#ff6200"
+        android:textSize="30dp"
+        android:text="학점 계산기" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_weight="1"
+        android:textColor="#020efc"
+        android:textSize="30dp"
+        android:text="레스토랑 예약시스템" />
 </LinearLayout>
