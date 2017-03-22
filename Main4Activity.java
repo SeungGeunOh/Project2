@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -18,7 +19,7 @@ import android.widget.TimePicker;
 
 public class Main4Activity extends AppCompatActivity implements View.OnClickListener {
     EditText Edit1, Edit2, Edit3;
-    TextView Re_Date, Re_Time, Adult, Teen, Child;
+    TextView Re_Date, Re_Time, Adult, Teen, Child, Text;
     Switch Swit;
     Chronometer Chro;
     DatePicker Date;
@@ -26,12 +27,14 @@ public class Main4Activity extends AppCompatActivity implements View.OnClickList
     Button Pre, Next;
     GridLayout Grid;
     TableLayout Table;
+    LinearLayout Linear;
     int Index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
+        setTitle("레스토랑 예약시스템");
 
         Edit1 = (EditText)findViewById(R.id.editText);
         Edit2 = (EditText)findViewById(R.id.editText4);
@@ -45,11 +48,14 @@ public class Main4Activity extends AppCompatActivity implements View.OnClickList
 
         Table = (TableLayout)findViewById(R.id.table);
 
+        Linear = (LinearLayout)findViewById(R.id.linear);
+
         Re_Date = (TextView)findViewById(R.id.textView38);
         Re_Time = (TextView)findViewById(R.id.textView36);
         Adult = (TextView)findViewById(R.id.textView34);
         Teen = (TextView)findViewById(R.id.textView32);
         Child = (TextView)findViewById(R.id.textView30);
+        Text = (TextView)findViewById(R.id.textView2);
 
         Swit = (Switch)findViewById(R.id.switch1);
         Chro= (Chronometer)findViewById(R.id.chronometer1);
@@ -62,24 +68,36 @@ public class Main4Activity extends AppCompatActivity implements View.OnClickList
         Pre.setOnClickListener(this);
         Next.setOnClickListener(this);
 
-        Chro.setBase(SystemClock.elapsedRealtime());
-
         Swit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked == true) {
                     Index++;
-                    ChangePage();
+                    ChangeFunction();
+                    Visible();
                     Chro.setBase(SystemClock.elapsedRealtime());
                     Chro.start();
                 }
                 else {
                     Index = 0;
-                    ChangePage();
+                    ChangeFunction();
+                    InVisible();
                     Chro.stop();
                 }
             }
         });
+    }
+
+    void Visible(){
+        Linear.setVisibility(View.VISIBLE);
+        Text.setVisibility(View.VISIBLE);
+        Chro.setVisibility(View.VISIBLE);
+    }
+
+    void InVisible(){
+        Linear.setVisibility(View.INVISIBLE);
+        Text.setVisibility(View.INVISIBLE);
+        Chro.setVisibility(View.INVISIBLE);
     }
 
     void setDate(){
@@ -87,16 +105,16 @@ public class Main4Activity extends AppCompatActivity implements View.OnClickList
     }
 
     void setTime(){
-        int Hour, Min;
+        int Hour, Minute;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Hour = Time.getHour();
-            Min = Time.getMinute();
+            Minute = Time.getMinute();
         }
         else {
             Hour = Time.getCurrentHour();
-            Min = Time.getCurrentMinute();
+            Minute = Time.getCurrentMinute();
         }
-        Re_Time.setText(String.format("%d시 %d분", Hour, Min));
+        Re_Time.setText(String.format("%d시 %d분", Hour, Minute));
     }
 
     void setReset(){
@@ -104,6 +122,7 @@ public class Main4Activity extends AppCompatActivity implements View.OnClickList
         Edit2.setText(null);
         Edit3.setText(null);
     }
+
     void setPeople(){
         String adult = Edit1.getText().toString();
         String teen = Edit2.getText().toString();
@@ -129,8 +148,7 @@ public class Main4Activity extends AppCompatActivity implements View.OnClickList
         setReset();
     }
 
-
-    void ChangePage() {
+    void ChangeFunction() {
         if (Index == 0){
             Date.setVisibility(View.INVISIBLE);
             Time.setVisibility(View.INVISIBLE);
@@ -176,12 +194,12 @@ public class Main4Activity extends AppCompatActivity implements View.OnClickList
             case R.id.button1 :
                 if (Index > 1)
                     Index--;
-                ChangePage();
+                ChangeFunction();
                 break;
             case R.id.button2 :
                 if (Index < 4)
                     Index++;
-                ChangePage();
+                ChangeFunction();
                 break;
             default :
                 break;
